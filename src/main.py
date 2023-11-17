@@ -1,7 +1,8 @@
 import numpy as np
 from conway import board
+from conway import plotting
 
-myBoard = board.Board(
+myBoard1 = board.Board(
     np.array(
         [
             [0, 0, 0, 0, 0, 0],
@@ -13,5 +14,5 @@ myBoard = board.Board(
         ]
     )
 )
-myBoard.step()
-print(myBoard.data)
+myBoard2 = board.Board((15, 30))
+plotting.plot_episode(myBoard2, 200, 10)
