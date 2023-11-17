@@ -1,5 +1,5 @@
 import numpy as np
-from src import conway
+from src.conway import board
 
 
 # The following three tests are patterns taken from
@@ -17,10 +17,10 @@ def test_loaf():
             [0, 0, 0, 0, 0, 0],
         ]
     )
-    loaf = conway.board.Board(initial_state)
+    loaf = board.Board(initial_state)
     for _ in range(10):
         loaf.step()
-    assert loaf.data == initial_state
+    assert (loaf.data == initial_state).all()
 
 
 def test_beacon():
@@ -34,11 +34,11 @@ def test_beacon():
             [0, 0, 0, 0, 0, 0],
         ]
     )
-    beacon = conway.board.Board(initial_state)
+    beacon = board.Board(initial_state)
     beacon.step()
-    assert beacon.data != initial_state
+    assert (beacon.data != initial_state).any()
     beacon.step()
-    assert beacon.data == initial_state
+    assert (beacon.data == initial_state).all()
 
 
 def test_glider():
@@ -52,12 +52,13 @@ def test_glider():
             [0, 0, 0, 0, 0, 0],
         ]
     )
-    glider = conway.board.Board(initial_state)
+    glider = board.Board(initial_state)
     for _ in range(24):
         glider.step()
-    assert glider.data == initial_state
+    assert (glider.data == initial_state).all()
 
 
 def test_random():
-    board = conway.board.Board((4, 7))
-    board.step()
+    rand_board = board.Board((4, 7))
+    rand_board.step()
+    assert rand_board.data.shape == (4, 7)
