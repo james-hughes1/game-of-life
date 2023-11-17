@@ -56,3 +56,8 @@ def test_glider():
     for _ in range(24):
         glider.step()
     assert glider.data == initial_state
+
+
+def test_random():
+    board = conway.board.Board((4, 7))
+    board.step()
