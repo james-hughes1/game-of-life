@@ -20,19 +20,22 @@ class Board:
     by a single step.
     """
 
-    def __init__(self, initialisation: Union[np.ndarray, tuple]):
+    def __init__(self, start: Union[np.ndarray, tuple], random_seed: int = 42):
         """!@brief Constructor to instantiate board with initial state.
 
-        @param initialisation If a numpy array is given, this is used for the
+        @param start If a numpy array is given, this is used for the
         board data. If a tuple is given, a numpy array of this shape is
         generated for the board data.
+        @param random_seed Provides random seed for board generation
+        reproducibility.
         """
-        if isinstance(initialisation, np.ndarray):
-            self.data = initialisation
-        elif type(initialisation) is tuple:
-            self.data = 1 * (np.random.rand(*initialisation) > 0.5)
+        random_gen = np.random.default_rng(seed=random_seed)
+        if isinstance(start, np.ndarray):
+            self.data = start
+        elif type(start) is tuple:
+            self.data = random_gen.integers(low=0, high=2, size=start)
         else:
-            self.data = 1 * (np.random.rand(6, 6) > 0.5)
+            self.data = random_gen.integers(low=0, high=2, size=(6, 6))
         self.nrows, self.ncols = self.data.shape
 
     def __str__(self):
