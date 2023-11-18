@@ -9,7 +9,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.ticker import MultipleLocator
-from board import Board
+from conway.board import Board
 
 
 def generate_gif_episode(
@@ -21,7 +21,7 @@ def generate_gif_episode(
     board.
     @param nsteps Number of steps to be generated in the episode.
     @param fps Number of frames per second for the .gif file.
-    @param filename Filename for the .gif file.
+    @param filename Filename for the .gif file. Should exclude extension.
     @param gridlines Boolean controlling whether to add lines around the border
     of each cell.
     """
@@ -55,4 +55,4 @@ def generate_gif_episode(
         interval=1000 / fps,
     )
 
-    anim.save("plots/" + filename, fps=fps)
+    anim.save(filename + ".gif", fps=fps)
