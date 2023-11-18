@@ -31,11 +31,19 @@ class Board:
         """
         random_gen = np.random.default_rng(seed=random_seed)
         if isinstance(start, np.ndarray):
+            if len(start.shape) != 2:
+                raise ValueError("Invalid start, must be 2d array.")
+            elif (start * (1 - start) != 0).any():
+                raise ValueError("Invalid start, entries must be 0 or 1.")
             self.data = start
         elif type(start) is tuple:
+            if len(start) != 2:
+                raise ValueError("Invalid start, must be 2-tuple.")
+            elif not (isinstance(start[0], int) and isinstance(start[1], int)):
+                raise ValueError("Invalid start, must be tuple of ints.")
             self.data = random_gen.integers(low=0, high=2, size=start)
         else:
-            self.data = random_gen.integers(low=0, high=2, size=(6, 6))
+            raise TypeError("Invalid start, must be 2d np.array or tuple.")
         self.nrows, self.ncols = self.data.shape
 
     def __str__(self):
