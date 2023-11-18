@@ -1,16 +1,35 @@
+"""!@file plotting.py
+
+@brief Contains tools for plotting conway's game of life.
+
+@author Created by J. Hughes on 17/11/2023.
+"""
+
+# Import plotting modules
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.ticker import MultipleLocator
+from board import Board
 
 
-def plot_episode(board, n, fps, filename, gridlines=False):
+def generate_gif_episode(
+    board: Board, nsteps: int, fps: int, filename: str, gridlines: bool = False
+):
+    """!@brief Generate a gif for an episode of Game of Life.
+
+    @param board An object of class Board, storing the current state of the
+    board.
+    @param nsteps Number of steps to be generated in the episode.
+    @param fps Number of frames per second for the .gif file.
+    @param filename Filename for the .gif file.
+    @param gridlines Boolean controlling whether to add lines around the border
+    of each cell.
+    """
     fig = plt.figure()
     ax = plt.axes()
-
     fig.set_tight_layout(True)
 
-    nrows, ncols = board.data.shape
-
+    # Plot gridlines if specified
     if gridlines:
         ax.xaxis.set_major_locator(MultipleLocator(1))
         ax.yaxis.set_major_locator(MultipleLocator(1))
@@ -19,22 +38,20 @@ def plot_episode(board, n, fps, filename, gridlines=False):
         ax.yaxis.set_ticklabels([])
     else:
         ax.axis("off")
+    extent_zeroed_cells = (0, board.ncols, 0, board.nrows)
+    im = plt.imshow(board.data, cmap="gnuplot", extent=extent_zeroed_cells)
 
-    im = plt.imshow(board.data, cmap="gnuplot", extent=(0, ncols, 0, nrows))
-
+    # Controls update of frames
     def animate_func(i):
-        if i % fps == 0:
-            print(".", end="")
-
         board.step()
-
         im.set_array(board.data)
         return [im]
 
+    # Generate animation
     anim = animation.FuncAnimation(
         fig,
         animate_func,
-        frames=n,
+        frames=nsteps,
         interval=1000 / fps,
     )
 

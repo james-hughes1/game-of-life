@@ -1,6 +1,5 @@
 import numpy as np
 from conway import board
-from conway import plotting
 
 myBoard1 = board.Board(
     np.array(
@@ -15,4 +14,4 @@ myBoard1 = board.Board(
     )
 )
 myBoard2 = board.Board((30, 50))
-plotting.plot_episode(myBoard2, 200, 10, "gol_anim.gif")
+print(myBoard1)
