@@ -14,5 +14,5 @@ myBoard1 = board.Board(
         ]
     )
 )
-myBoard2 = board.Board((15, 30))
-plotting.plot_episode(myBoard2, 200, 10)
+myBoard2 = board.Board((30, 50))
+plotting.plot_episode(myBoard2, 200, 10, "gol_anim.gif")

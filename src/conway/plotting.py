@@ -3,17 +3,22 @@ import matplotlib.animation as animation
 from matplotlib.ticker import MultipleLocator
 
 
-def plot_episode(board, n, fps):
+def plot_episode(board, n, fps, filename, gridlines=False):
     fig = plt.figure()
     ax = plt.axes()
 
+    fig.set_tight_layout(True)
+
     nrows, ncols = board.data.shape
 
-    ax.xaxis.set_major_locator(MultipleLocator(1))
-    ax.xaxis.set_ticklabels([])
-    ax.yaxis.set_major_locator(MultipleLocator(1))
-    ax.yaxis.set_ticklabels([])
-    ax.grid(which="major", color="blue")
+    if gridlines:
+        ax.xaxis.set_major_locator(MultipleLocator(1))
+        ax.yaxis.set_major_locator(MultipleLocator(1))
+        ax.grid(which="major", color="blue")
+        ax.xaxis.set_ticklabels([])
+        ax.yaxis.set_ticklabels([])
+    else:
+        ax.axis("off")
 
     im = plt.imshow(board.data, cmap="gnuplot", extent=(0, ncols, 0, nrows))
 
@@ -33,4 +38,4 @@ def plot_episode(board, n, fps):
         interval=1000 / fps,
     )
 
-    anim.save("plots/gol_anim.gif", fps=fps)
+    anim.save("plots/" + filename, fps=fps)
